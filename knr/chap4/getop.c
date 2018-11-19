@@ -13,15 +13,27 @@ char getop(char string[]) {
 
   if (!isdigit(string[0]) && string[0] != '.') {
     // not a number, must be an operator
-    return string[0];
+
+    // handle negative numbers
+    if (string[0] == '-') {
+      // grab the second character to see if it's negative number
+      string[1] = getch();
+      ungetch(string[1]);
+
+      if (!isdigit(string[1])) {
+        return string[0];
+      }
+    } else {
+      return string[0];
+    }
   }
 
   i = 0;
 
-  while (isdigit(string[i])) {
+  do {
     i += 1;
     string[i] = getch();
-  }
+  } while (isdigit(string[i]));
 
   if (string[i] == '.') {
     i += 1;

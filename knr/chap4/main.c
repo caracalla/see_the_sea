@@ -28,6 +28,10 @@ int main() {
         second_operand = pop();
         push(pop() / second_operand);
         break;
+      case '%':
+        second_operand = pop();
+        push((int)pop() % (int)second_operand);
+        break;
       case '\n':
         printf("\t%.8g\n", pop());
         reset_stack();

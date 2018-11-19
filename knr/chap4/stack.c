@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h> // exit
 #include "calc.h"
 
 #define MAXVAL 100
@@ -12,6 +13,7 @@ void push(double value) {
     stack_pointer += 1;
   } else {
     printf("error: stack full\n");
+    exit(1);
   }
 }
 
