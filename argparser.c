@@ -2,23 +2,30 @@
 #include <stdlib.h>
 #include <string.h>
 
-char get_arg_type(size_t arglen, char *current_arg) {
+typedef enum {
+  longopt,
+  shortopt,
+  shortopt_multi,
+  notopt
+} arg_type;
+
+arg_type get_arg_type(size_t arglen, char *current_arg) {
   if (arglen > 1 && current_arg[0] == '-') {
     if (current_arg[1] == '-') {
       // it's a long-opt (or just "--"?)
-      return 'l';
+      return longopt;
     } else {
       if (arglen == 2) {
         // it's a single short-opt
-        return 's';
+        return shortopt;
       } else {
-        // it's multipel short-opts
-        return 'm';
+        // it's multiple short-opts
+        return shortopt_multi;
       }
     }
   } else {
     // it's something else
-    return 0;
+    return notopt;
   }
 }
 
@@ -35,16 +42,16 @@ int main(int argc, char *argv[]) {
     arg_type = get_arg_type(arglen, current_arg);
 
     switch (arg_type) {
-      case 'l':
+      case longopt:
         printf("it's a longopt\n");
         break;
-      case 'm':
+      case shortopt_multi:
         printf("it's multiple shortopts\n");
         break;
-      case 's':
+      case shortopt:
         printf("it's a single shortopt\n");
         break;
-      case 0:
+      case notopt:
         printf("it's not an opt at all!\n");
         break;
       default:

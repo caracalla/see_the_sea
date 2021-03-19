@@ -16,7 +16,7 @@ int main() {
 
   while ((dp = readdir(dirp)) != NULL) {
     if (strlen(dp->d_name) > 0 && dp->d_name[0] != '.') {
-      printf("file name: %s, d_ino: %u\n", dp->d_name, dp->d_ino);
+      printf("file name: %s, d_ino: %llu\n", dp->d_name, dp->d_ino);
 
       int stat_res = stat(dp->d_name, &statbuf);
 
